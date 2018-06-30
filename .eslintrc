@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "env": {
+    "mocha": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": "standard",
+  "plugins": [],
+  "rules": {
+    "semi": 0,
+    "global-require": 0,
+    "arrow-parens": 0,
+    "generator-star-spacing": 0,
+    "quotes": 0
+  }
+}

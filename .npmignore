@@ -1,0 +1,10 @@
+.DS_Store
+node_modules/
+.idea
+npm-debug.log
+.gitignore
+.eslintrc
+.eslintignore
+.babelrc
+.editorconfig
+.npmignore
