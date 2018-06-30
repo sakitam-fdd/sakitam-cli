@@ -5,6 +5,5 @@ npm-debug.log
 .gitignore
 .eslintrc
 .eslintignore
-.babelrc
 .editorconfig
 .npmignore

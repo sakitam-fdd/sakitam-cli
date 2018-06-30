@@ -14,6 +14,7 @@ const logger = require('../src/helper/logger');
 const generate = require('../src/core/generate');
 const checkVersion = require('../src/check/check-version');
 const localPath = require('../src/helper/local-path');
+const repositories = require('../src/config/repositories');
 
 const isLocalPath = localPath.isLocalPath;
 const getTemplatePath = localPath.getTemplatePath;
@@ -22,7 +23,7 @@ const getTemplatePath = localPath.getTemplatePath;
  * Usage.
  */
 program
-  .usage('<template-name> [project-name]')
+  .usage('<template-name> [project-name] [type]')
   .option('-c, --clone', 'use git clone')
   .option('-o, --origin', 'set git remote origin')
   .option('--offline', 'use cached src');
@@ -35,13 +36,13 @@ program.on('--help', () => {
   logger.log('  Examples:');
   logger.log();
   logger.log(chalk.gray('    # create a new project with an official template'));
-  logger.log('    $ aurorafe init webpack my-project');
+  logger.log('    $ sakitam init webpack my-project');
   logger.log();
   logger.log(chalk.gray('    # create a new project straight from a github template'));
-  logger.log('    $ aurorafe init username/repo my-project');
+  logger.log('    $ sakitam init username/repo my-project');
   logger.log();
   logger.log(chalk.gray('    # create a new project straight from a git res'));
-  logger.log('    $ aurorafe init my-project -o git@github.com:xx/xxxx.git');
+  logger.log('    $ sakitam init my-project -o git@github.com:xx/xxxx.git');
   logger.log();
 });
 
@@ -60,12 +61,13 @@ help();
 let template = program.args[0];
 const hasSlash = template.indexOf('/') > -1;
 const rawName = program.args[1];
+const _type = program.args[2] || 'vue';
 const inPlace = !rawName || rawName === '.';
 const name = inPlace ? path.relative('../', process.cwd()) : rawName;
 const to = path.resolve(rawName || '.');
 const clone = program.clone || false;
 // eslint-disable-next-line
-const tmp = path.join(home, '.aurorafe-templates', template.replace(/[\/:]/g, '-'));
+const tmp = path.join(home, '.sakitam-templates', template.replace(/[\/:]/g, '-'));
 if (program.offline) {
   console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
   template = tmp
@@ -116,7 +118,7 @@ function run () {
     checkVersion(() => {
       if (!hasSlash) {
         // use official templates
-        const officialTemplate = 'aurorafe/' + template;
+        const officialTemplate = `${repositories[_type]}/${template}`;
         if (template.indexOf('#') !== -1) {
           downloadAndGenerate(officialTemplate);
         } else {

@@ -1,27 +1,26 @@
 {
-  "name": "aurorafe-cli",
+  "name": "sakitam-cli",
   "version": "0.0.1",
-  "description": "A simple cli scaffolding for aurorafe-cli",
+  "description": "A simple cli scaffolding for sakitam-cli",
   "bin": {
-    "aurorafe": "bin/aurorafe",
-    "aurorafe-init": "bin/aurorafe-init"
+    "sakitam": "bin/sakitam",
+    "sakitam-init": "bin/sakitam-init"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aurorafe/aurorafe-cli.git"
+    "url": "git+https://github.com/sakitam/sakitam-cli.git"
   },
   "keywords": [
-    "aurorafe",
+    "sakitam",
     "cli",
     "plugin"
   ],
   "author": "sakitam-fdd",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aurorafe/aurorafe-cli/issues"
+    "url": "https://github.com/sakitam/sakitam-cli/issues"
   },
-  "homepage": "https://github.com/aurorafe/aurorafe-cli#readme",
-  "main": "src/index.js",
+  "homepage": "https://github.com/sakitam/sakitam-cli#readme",
   "scripts": {
     "lint": "eslint --format node_modules/eslint-friendly-formatter --ext .js src --fix"
   },
@@ -43,13 +42,11 @@
     "semver": "^5.5.0",
     "shelljs": "^0.8.2",
     "uuid": "^3.2.1",
-    "validate-npm-package-name": "^3.0.0"
+    "validate-npm-package-name": "^3.0.0",
+    "user-home": "^2.0.0",
+    "tildify": "^1.2.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.3",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
     "eslint": "^4.16.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-friendly-formatter": "^3.0.0",

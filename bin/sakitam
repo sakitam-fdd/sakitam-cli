@@ -5,6 +5,6 @@ let pkg = require('../package.json');
 require('commander')
   .version(pkg.version, '-v, --version')
   .usage('<command> [options]')
-  .command('init', 'generate a new project from a aurorafe content')
+  .command('init', 'generate a new project from a git repositories or local repository')
   .command('list', 'list available official templates')
   .parse(process.argv);

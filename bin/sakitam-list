@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+const program = require('commander');
+const { log, fatal } = require('../src/helper/logger');
+const axios = require('axios');
+const chalk = require('chalk');
+const repositories = require('../src/config/repositories');
+
+/**
+ * Help.
+ */
+
+program.on('--help', () => {
+  log();
+  log(chalk.yellow(`If no template type is specified, the react template is the default query.`));
+  log();
+  log(chalk.white(`★ The default template has react vue`));
+  log();
+  log('    $ sakitam list vue');
+  log();
+});
+
+/**
+ * Padding.
+ */
+log();
+process.on('exit', () => {
+  log()
+});
+
+/**
+ * Help.
+ */
+function help () {
+  program.parse(process.argv);
+  if (program.args.length < 1) {
+    program.help();
+  }
+}
+help();
+
+const _user = repositories[program.args[0]] || 'sakitam';
+
+axios({
+  url: `https://api.github.com/users/${_user}/repos`,
+  headers: {
+    'User-Agent': 'sakitam-cli'
+  }
+}).then(res => {
+  const requestBody = res.data;
+  if (Array.isArray(requestBody)) {
+    log('  Available official templates:');
+    log();
+    requestBody.forEach(repo => {
+      if (_user === 'vuejs-templates') {
+        log(
+          '  ' + chalk.yellow('★') +
+          '  ' + chalk.blue(repo.name) +
+          ' - ' + chalk.green(repo.description))
+      } else {
+        if (/react-template/.test(repo.name) || /vue-template/.test(repo.name)) {
+          log(
+            '  ' + chalk.yellow('★') +
+            '  ' + chalk.blue(repo.name) +
+            ' - ' + chalk.green(repo.description))
+        }
+      }
+    })
+  } else {
+    console.error(requestBody.message)
+  }
+}).catch(error => {
+  if (error) fatal(error.message)
+});
