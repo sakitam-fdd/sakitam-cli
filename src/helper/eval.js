@@ -5,7 +5,7 @@
 const { fatal } = require('./logger');
 module.exports = function evaluate (exp, data) {
   // eslint-disable-next-line
-  let fn = new Function('data', 'with (data) { return ' + exp + '}');
+  const fn = new Function('data', 'with (data) { return ' + exp + '}');
   try {
     return fn(data);
   } catch (e) {

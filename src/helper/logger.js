@@ -6,8 +6,9 @@ const logError = message => {
   process.exit(1);
 };
 
-const logSuccess = message => {
-  console.log(chalk.green(message));
+const logSuccess = (...message) => {
+  const msg = format.apply(format, message);
+  console.log(chalk.green(msg))
 };
 
 const logTip = (...message) => {

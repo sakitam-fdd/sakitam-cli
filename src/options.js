@@ -68,7 +68,7 @@ function setValidateName (opts) {
  * @return {Object}
  */
 module.exports = function options (name, dir) {
-  const opts = getMetadata(dir)
+  const opts = getMetadata(dir);
   setDefault(opts, 'name', name);
   setValidateName(opts);
   const author = getGitUser();

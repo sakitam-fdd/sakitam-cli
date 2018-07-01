@@ -34,10 +34,7 @@ function prompt (data, key, prompt, done) {
     message: prompt.message || prompt.label || key,
     default: promptDefault,
     choices: prompt.choices || [],
-    validate: prompt.validate || (() => true),
-    filter: prompt.filter || function (val) {
-      return val;
-    }
+    validate: prompt.validate || (() => true)
   }]).then(answers => {
     if (Array.isArray(answers[key])) {
       data[key] = {};

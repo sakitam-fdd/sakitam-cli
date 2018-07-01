@@ -118,6 +118,7 @@ function run () {
     checkVersion(() => {
       if (!hasSlash) {
         // use official templates
+        console.log(template, '11')
         const officialTemplate = `${repositories[_type]}/${template}`;
         if (template.indexOf('#') !== -1) {
           downloadAndGenerate(officialTemplate);
