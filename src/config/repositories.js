@@ -1,5 +1,12 @@
 const _config = {
-  'vue': 'vuejs-templates'
+  'vue': {
+    repo: 'aurorafe',
+    prefix: 'vue-template'
+  },
+  'react': {
+    repo: 'aurorafe',
+    prefix: 'react-template'
+  }
 };
 
 module.exports = _config;

@@ -118,14 +118,13 @@ function run () {
     checkVersion(() => {
       if (!hasSlash) {
         // use official templates
-        console.log(template, '11')
-        const officialTemplate = `${repositories[_type]}/${template}`;
+        const officialTemplate = `${repositories[_type]['repo']}/${template}`;
         if (template.indexOf('#') !== -1) {
           downloadAndGenerate(officialTemplate);
         } else {
           downloadAndGenerate(officialTemplate);
         }
-      } else {
+      } else { // 有斜线分开说明给定的为 username/repo
         downloadAndGenerate(template);
       }
     })

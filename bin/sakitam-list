@@ -5,10 +5,14 @@ const axios = require('axios');
 const chalk = require('chalk');
 const repositories = require('../src/config/repositories');
 
+program
+  .usage('<type> [repo-name]')
+  .option('-u, --username', 'use username for repo')
+  .option('-t, --template', 'template repo prefix');
+
 /**
  * Help.
  */
-
 program.on('--help', () => {
   log();
   log(chalk.yellow(`If no template type is specified, the react template is the default query.`));
@@ -16,6 +20,7 @@ program.on('--help', () => {
   log(chalk.white(`★ The default template has react vue`));
   log();
   log('    $ sakitam list vue');
+  log('    $ sakitam list react');
   log();
 });
 
@@ -32,13 +37,18 @@ process.on('exit', () => {
  */
 function help () {
   program.parse(process.argv);
-  if (program.args.length < 1) {
-    program.help();
-  }
 }
 help();
 
-const _user = repositories[program.args[0]] || 'sakitam';
+const type = program.args[0];
+const repo = program.username || false;
+const _user = (repo ? program.args[1] : repositories[type]['repo']) || 'aurorafe';
+const _tplfix = program.template || false;
+const prefix = _tplfix ? program.args[2] : repositories[type]['prefix'];
+
+if (repo && _tplfix && program.args.length <= 2) {
+  program.help();
+}
 
 axios({
   url: `https://api.github.com/users/${_user}/repos`,
@@ -56,13 +66,11 @@ axios({
           '  ' + chalk.yellow('★') +
           '  ' + chalk.blue(repo.name) +
           ' - ' + chalk.green(repo.description))
-      } else {
-        if (/react-template/.test(repo.name) || /vue-template/.test(repo.name)) {
-          log(
-            '  ' + chalk.yellow('★') +
-            '  ' + chalk.blue(repo.name) +
-            ' - ' + chalk.green(repo.description))
-        }
+      } else if (_user !== 'vuejs-templates' && (new RegExp(prefix)).test(repo.name)) {
+        log(
+          '  ' + chalk.yellow('★') +
+          '  ' + chalk.blue(repo.name) +
+          ' - ' + chalk.green(repo.description))
       }
     })
   } else {
