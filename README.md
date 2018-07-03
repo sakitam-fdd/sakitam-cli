@@ -49,3 +49,4 @@ sakitam -h
 | `consolidate` | `支持多种模板引擎的渲染` | https://github.com/tj/consolidate.js |
 | `async` | `用于异步代码的高阶函数和通用模型` | https://github.com/caolan/async |
 | `validate-npm-package-name` | `用于验证npm包` | https://github.com/npm/validate-npm-package-name |
+| `figlet` | `A FIG Driver written in JavaScript which aims to fully implement the FIGfont spec.` | https://github.com/patorjk/figlet.js |

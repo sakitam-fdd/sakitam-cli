@@ -3,6 +3,7 @@ const program = require('commander');
 const { log, fatal } = require('../src/helper/logger');
 const axios = require('axios');
 const chalk = require('chalk');
+const ora = require('ora');
 const repositories = require('../src/config/repositories');
 
 program
@@ -15,7 +16,7 @@ program
  */
 program.on('--help', () => {
   log();
-  log(chalk.yellow(`If no template type is specified, the react template is the default query.`));
+  log(chalk.yellow(`If no template type is specified, the vue template is the default query.`));
   log();
   log(chalk.white(`★ The default template has react vue`));
   log();
@@ -40,7 +41,7 @@ function help () {
 }
 help();
 
-const type = program.args[0];
+const type = program.args[0] || 'vue';
 const repo = program.username || false;
 const _user = (repo ? program.args[1] : repositories[type]['repo']) || 'aurorafe';
 const _tplfix = program.template || false;
@@ -50,6 +51,27 @@ if (repo && _tplfix && program.args.length <= 2) {
   program.help();
 }
 
+const spinner = ora({
+  text: 'loading...',
+  spinner: {
+    "interval": 80,
+    "frames": [
+      "🕛 ",
+      "🕐 ",
+      "🕑 ",
+      "🕒 ",
+      "🕓 ",
+      "🕔 ",
+      "🕕 ",
+      "🕖 ",
+      "🕗 ",
+      "🕘 ",
+      "🕙 ",
+      "🕚 "
+    ]
+  }
+});
+spinner.start();
 axios({
   url: `https://api.github.com/users/${_user}/repos`,
   headers: {
@@ -58,7 +80,8 @@ axios({
 }).then(res => {
   const requestBody = res.data;
   if (Array.isArray(requestBody)) {
-    log('  Available official templates:');
+    spinner.succeed(`Available official templates:`);
+    log('  ');
     log();
     requestBody.forEach(repo => {
       if (_user === 'vuejs-templates') {
@@ -77,5 +100,6 @@ axios({
     console.error(requestBody.message)
   }
 }).catch(error => {
+  spinner.fail('query error!');
   if (error) fatal(error.message)
 });

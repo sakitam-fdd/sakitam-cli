@@ -136,7 +136,22 @@ function run () {
  * @param {String} template
  */
 function downloadAndGenerate (template) {
-  const spinner = ora('downloading template');
+  const spinner = ora({
+    text: 'downloading template',
+    spinner: {
+      "interval": 80,
+      "frames": [
+        "⣾",
+        "⣽",
+        "⣻",
+        "⢿",
+        "⡿",
+        "⣟",
+        "⣯",
+        "⣷"
+      ]
+    }
+  });
   spinner.start();
   // Remove if local template exists
   if (exists(tmp)) rm(tmp);
