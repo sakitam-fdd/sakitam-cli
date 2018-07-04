@@ -1,6 +1,6 @@
 {
   "name": "sakitam-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple cli scaffolding for sakitam-cli",
   "bin": {
     "sakitam": "bin/sakitam",
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/sakitam/sakitam-cli#readme",
   "scripts": {
     "lint": "eslint --format node_modules/eslint-friendly-formatter --ext .js src --fix",
-    "preinstall": "node src/helper/printf"
+    "postinstall": "node src/helper/printf"
   },
   "dependencies": {
     "async": "^2.6.1",
