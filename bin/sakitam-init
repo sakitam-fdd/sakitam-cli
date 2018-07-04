@@ -108,7 +108,6 @@ function run () {
     if (exists(templatePath)) {
       generate(name, templatePath, to, err => {
         if (err) logger.fatal(err);
-        console.log();
         logger.success('Generated "%s".', name);
       })
     } else {
@@ -160,7 +159,6 @@ function downloadAndGenerate (template) {
     if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim());
     generate(name, tmp, to, err => {
       if (err) logger.fatal(err);
-      console.log();
       logger.success('Generated "%s".', name)
     })
   })

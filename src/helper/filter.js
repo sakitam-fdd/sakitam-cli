@@ -2,23 +2,20 @@
 const match = require('minimatch');
 const evaluate = require('./eval');
 
-module.exports = function (filters, files, data, done) {
+module.exports = (files, filters, data, done) => {
   if (!filters) {
-    return done();
+    return done()
   }
-  let filePaths = Object.keys(files);
-  if (!filePaths.length) {
-    return done();
-  }
-  Object.keys(filters).forEach(function (regexp) {
-    filePaths.forEach(function (path) {
-      if (match(path, regexp, {dot: true})) {
-        let matchedVal = filters[regexp];
-        if (!evaluate(matchedVal, data)) {
-          delete files[path];
+  const fileNames = Object.keys(files);
+  Object.keys(filters).forEach(glob => {
+    fileNames.forEach(file => {
+      if (match(file, glob, { dot: true })) {
+        const condition = filters[glob];
+        if (!evaluate(condition, data)) {
+          delete files[file]
         }
       }
-    });
+    })
   });
-  done();
+  done()
 };
