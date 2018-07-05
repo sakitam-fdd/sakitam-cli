@@ -7,7 +7,7 @@ const ora = require('ora');
 const repositories = require('../src/config/repositories');
 
 program
-  .usage('<type> [repo-name]')
+  .usage('<type>')
   .option('-u, --username <n>', 'use username for repo')
   .option('-p, --prefix <n>', 'template repo prefix');
 
@@ -22,6 +22,7 @@ program.on('--help', () => {
   log();
   log('    $ sakitam list vue');
   log('    $ sakitam list react');
+  log('    $ sakitam list -u aurorafe -p vue');
   log();
 });
 
@@ -43,10 +44,10 @@ help();
 
 const type = program.args[0];
 const repo = !!program.username || false;
-const _user = (repo ? program.username : repositories[type]['repo']) || 'aurorafe';
+const _user = (repo ? program.username : (type && repositories[type]['repo'] ? repositories[type]['repo'] : '')) || 'aurorafe';
 const _tplfix = !!program.prefix || false;
-const prefix = _tplfix ? program.prefix : repositories[type]['prefix'] || 'vue';
-if (program.args.length < 1 && (!repo && !_tplfix)) {
+const prefix = (_tplfix ? program.prefix : (type && repositories[type]['prefix'] ? repositories[type]['prefix'] : '')) || 'vue';
+if (program.args.length < 1 && (!_user && !prefix)) {
   program.help();
 }
 

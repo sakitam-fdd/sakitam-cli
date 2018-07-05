@@ -27,7 +27,7 @@ program
   .option('-c, --clone <n>', 'use git clone')
   .option('-o, --origin <n>', 'set git remote origin')
   .option('--offline <n>', 'use cached src')
-  .option('-t <n>', 'template type: vue react library react-component vue-component');
+  .option('-t --type <n>', 'template type: vue react library react-component vue-component');
 
 /**
  * Help.
@@ -59,11 +59,12 @@ help();
 /**
  * Settings.
  */
-const clone = program.clone || false;
-console.log(program.clone)
-let template = clone ? program.args[1] : program.args[0];
+const clone = !!program.clone || false;
+const offline = !!program.offline || false;
+let rawName = (clone || offline) ? program.args[0] : program.args[1];
+let template = (clone || offline) ? (clone ? program.clone : program.offline) : program.args[0];
+template = template || program.args[0];
 const hasSlash = template.indexOf('/') > -1;
-let rawName = program.args[1];
 const inPlace = !rawName || rawName === '.';
 const name = inPlace ? path.relative('../', process.cwd()) : rawName;
 const to = path.resolve(rawName || '.');
@@ -119,7 +120,7 @@ function run () {
     checkVersion(() => {
       if (!hasSlash && !clone) {
         // use official templates
-        const _type = program.args[4] || 'aurorafe';
+        const _type = program.type || 'vue';
         const officialTemplate = `${repositories[_type]['repo']}/${template}`;
         if (template.indexOf('#') !== -1) {
           downloadAndGenerate(officialTemplate);
