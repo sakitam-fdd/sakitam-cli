@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sakitam/sakitam-cli.git"
+    "url": "git+https://github.com/sakitam-fdd/sakitam-cli.git"
   },
   "keywords": [
     "sakitam",
@@ -18,9 +18,9 @@
   "author": "sakitam-fdd",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sakitam/sakitam-cli/issues"
+    "url": "https://github.com/sakitam-fdd/sakitam-cli/issues"
   },
-  "homepage": "https://github.com/sakitam/sakitam-cli#readme",
+  "homepage": "https://github.com/sakitam-fdd/sakitam-cli#readme",
   "scripts": {
     "lint": "eslint --format node_modules/eslint-friendly-formatter --ext .js src --fix",
     "postinstall": "node src/helper/printf"
