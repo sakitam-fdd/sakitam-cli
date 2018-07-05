@@ -8,8 +8,8 @@ const repositories = require('../src/config/repositories');
 
 program
   .usage('<type> [repo-name]')
-  .option('-u, --username', 'use username for repo')
-  .option('-t, --template', 'template repo prefix');
+  .option('-u, --username <n>', 'use username for repo')
+  .option('-p, --prefix <n>', 'template repo prefix');
 
 /**
  * Help.
@@ -41,13 +41,12 @@ function help () {
 }
 help();
 
-const type = program.args[0] || 'vue';
-const repo = program.username || false;
-const _user = (repo ? program.args[1] : repositories[type]['repo']) || 'aurorafe';
-const _tplfix = program.template || false;
-const prefix = _tplfix ? program.args[2] : repositories[type]['prefix'];
-
-if (repo && _tplfix && program.args.length <= 2) {
+const type = program.args[0];
+const repo = !!program.username || false;
+const _user = (repo ? program.username : repositories[type]['repo']) || 'aurorafe';
+const _tplfix = !!program.prefix || false;
+const prefix = _tplfix ? program.prefix : repositories[type]['prefix'] || 'vue';
+if (program.args.length < 1 && (!repo && !_tplfix)) {
   program.help();
 }
 

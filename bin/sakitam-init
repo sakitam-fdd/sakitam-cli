@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const download = require('download-git-repo');
+const download = require('../src/core/download');
 const program = require('commander');
 const exists = require('fs').existsSync;
 const path = require('path');
@@ -23,10 +23,11 @@ const getTemplatePath = localPath.getTemplatePath;
  * Usage.
  */
 program
-  .usage('<template-name> [project-name] [type]')
-  .option('-c, --clone', 'use git clone')
-  .option('-o, --origin', 'set git remote origin')
-  .option('--offline', 'use cached src');
+  .usage('<template-name> [project-name]')
+  .option('-c, --clone <n>', 'use git clone')
+  .option('-o, --origin <n>', 'set git remote origin')
+  .option('--offline <n>', 'use cached src')
+  .option('-t <n>', 'template type: vue react library react-component vue-component');
 
 /**
  * Help.
@@ -58,16 +59,17 @@ help();
 /**
  * Settings.
  */
-let template = program.args[0];
+const clone = program.clone || false;
+console.log(program.clone)
+let template = clone ? program.args[1] : program.args[0];
 const hasSlash = template.indexOf('/') > -1;
-const rawName = program.args[1];
-const _type = program.args[2] || 'vue';
+let rawName = program.args[1];
 const inPlace = !rawName || rawName === '.';
 const name = inPlace ? path.relative('../', process.cwd()) : rawName;
 const to = path.resolve(rawName || '.');
-const clone = program.clone || false;
+const _links = template.split('/');
 // eslint-disable-next-line
-const tmp = path.join(home, '.sakitam-templates', template.replace(/[\/:]/g, '-'));
+const tmp = path.join(home, '.sakitam-templates', _links[_links.length - 1].replace(/^\.|(\.git)$/, ''));
 if (program.offline) {
   console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`);
   template = tmp
@@ -115,8 +117,9 @@ function run () {
     }
   } else {
     checkVersion(() => {
-      if (!hasSlash) {
+      if (!hasSlash && !clone) {
         // use official templates
+        const _type = program.args[4] || 'aurorafe';
         const officialTemplate = `${repositories[_type]['repo']}/${template}`;
         if (template.indexOf('#') !== -1) {
           downloadAndGenerate(officialTemplate);
@@ -154,7 +157,9 @@ function downloadAndGenerate (template) {
   spinner.start();
   // Remove if local template exists
   if (exists(tmp)) rm(tmp);
-  download(template, tmp, { clone }, err => {
+  download(template, tmp, {
+    clone: clone
+  }, function (err) {
     spinner.stop();
     if (err) logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim());
     generate(name, tmp, to, err => {

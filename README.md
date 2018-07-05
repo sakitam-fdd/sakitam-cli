@@ -33,6 +33,16 @@ npm i
 npm run dev
 ```
 
+## example
+
+```bash
+sakitam list vue // list vue project templete
+sakitam list react // list react project templete
+sakitam list library // list javascript library templete
+sakitam list react-component // list react component templete
+sakitam list vue-component // list vue component templete
+```
+
 ## Development
 
 ```bash

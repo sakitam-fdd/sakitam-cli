@@ -1,7 +1,7 @@
 {
   "name": "sakitam-cli",
-  "version": "0.0.3",
-  "description": "A simple cli scaffolding for sakitam-cli",
+  "version": "0.0.4",
+  "description": "A simple cli scaffolding for generate project",
   "bin": {
     "sakitam": "bin/sakitam",
     "sakitam-init": "bin/sakitam-init"
@@ -46,7 +46,9 @@
     "validate-npm-package-name": "^3.0.0",
     "user-home": "^2.0.0",
     "tildify": "^1.2.0",
-    "figlet": "^1.2.0"
+    "figlet": "^1.2.0",
+    "git-clone": "^0.1.0",
+    "download": "^5.0.3"
   },
   "devDependencies": {
     "eslint": "^4.16.0",
