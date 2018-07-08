@@ -49,6 +49,50 @@ sakitam init --offline vue-template-webpack project // Use cached template
 sakitam init -c direct:https://github.com/aurorafe/vue-template-webpack.git project // Use git clone ~ direct is important
 ```
 
+## Resource
+
+### vue & vue-component
+
+```bash
+
+// list
+sakitam list vue // or
+sakitam list -u vuejs-templates // list vue project templete
+sakitam list vue-component // list vue component templete
+
+// init
+sakitam init vue-template-webpack project // repo
+sakitam init aurorafe/vue-template-webpack project // user/repo
+// or
+sakitam init vuejs-templates/webpack project // or other template
+
+// components template
+sakitam init vue-component-template-webpack project // build your own component
+```
+
+### react & react-component
+
+```bash
+sakitam list react // list react project template
+sakitam list react-component // list react component templete
+
+// init
+sakitam init react-template-webpack project // repo
+sakitam init aurorafe/react-template-webpack project // user/repo or other template
+
+// components template
+sakitam init react-component-template-ts project // build your own component
+```
+
+### library (javascript library)
+
+```bash
+sakitam list library // list library template
+
+// init build your own javascript library
+sakitam init library-template-rollup project
+```
+
 ## Development
 
 ```bash
